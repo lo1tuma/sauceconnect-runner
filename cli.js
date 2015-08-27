@@ -11,9 +11,13 @@ var yargs = require('yargs')
   .describe('id', 'optional tunnel identifier')
   .describe('v', 'enable verbose logging')
   .describe('h', 'show this helpful message')
+  .describe('direct-domains', 'Comma-separated list of domains. Requests whose host matches one of these will be relayed directly through the internet, instead of through the tunnel.')
+  .describe('tunnel-domains', 'Inverse of \'--direct-domains\'. Only requests for domains in this list will be sent through the tunnel.')
   .alias('user', 'u')
   .alias('key', 'k')
   .alias('h', 'help')
+  .alias('D', 'direct-domains')
+  .alias('t', 'tunnel-domains')
   .wrap(72);
 require('colors');
 
@@ -46,6 +50,8 @@ var opt = {
   accessKey: accessKey,
   verbose: options.v,
   tunnelIdentifier: options.id,
+  directDomains: options['direct-domains'],
+  tunnelDomains: options['tunnel-domains'],
   logger: function(message) {
     console.warn('[sc] %s'.yellow, message);
   }
